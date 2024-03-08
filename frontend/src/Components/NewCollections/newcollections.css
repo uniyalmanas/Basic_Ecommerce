@@ -4,6 +4,7 @@
     flex-direction: column;
     gap: 10px;
     height: 90vh;
+    margin-bottom: 100vh;
     }
     .new-collections h1{
      color: #171717;
