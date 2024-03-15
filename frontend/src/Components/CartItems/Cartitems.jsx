@@ -4,7 +4,7 @@ import { ShopContext } from '../../Context/ShopContext';
 import remove_icon from '../Assets/cart_cross_icon.png';
 
 const Cartitems = () => {
-  const { all_product, cartItems, removeFromCart } = useContext(ShopContext);
+  const { all_product, cartItems, removeFromCart,getTotalCartAmount} = useContext(ShopContext);
 
   return (
     <div className="cartitems">
@@ -19,28 +19,31 @@ const Cartitems = () => {
       <hr />
 
       {all_product.map((e) => {
-        if (cartItems[e.id] > 0) {
-          return <div>          <div className="cartitems-format cartitems-format-main" key={e.id}>
-              <img src={e.image} alt="" className="carticon-product-icon" />
-              <p>{e.name}</p>
-              <p>₹{e.new_price*10}</p>
-              <button className="carticons-qualnity">{cartItems[e.id]}</button>
-              <p>₹{e.new_price * cartItems[e.id]*10}</p>
-              <img className='remove-icons' src={remove_icon} alt="" onClick={() => removeFromCart(e.id)} />
+    if (cartItems[e.id] > 0) {
+        return (
+            <div key={e.id}> {/* Ensure this key is unique */}
+                <div className="cartitems-format cartitems-format-main" key={e.id}>
+                    <img src={e.image} alt="" className="carticon-product-icon" />
+                    <p>{e.name}</p>
+                    <p>₹{e.new_price*10}</p>
+                    <button className="carticons-qualnity">{cartItems[e.id]}</button>
+                    <p>₹{e.new_price * cartItems[e.id]*10}</p>
+                    <img className='remove-icons' src={remove_icon} alt="" onClick={() => removeFromCart(e.id)} />
+                </div>
+                <hr />
             </div>
-            <hr />
-            </div>
-   
-        }
-        return null;
-      })}
+        );
+    }
+    return null;
+})}
+
       <div className="cartitems-down">
         <div className="cartitems-total">
             <h1>Cart Totals</h1>
             <div>
                 <div className="cartitems-total-items">
                     <p>Subtotal</p>
-                    <p>₹{0*10}</p>
+                    <p>₹{getTotalCartAmount()*10}</p>
                 </div>
                 <hr />
                 <div className="cartitems-total-items">
@@ -50,7 +53,7 @@ const Cartitems = () => {
                 <hr />
                 <div className="cartitems-total-items">
                     <h3>Total</h3>
-                    <h3>₹{0*10}</h3>
+                    <h3>₹{getTotalCartAmount()*10}</h3>
                 </div>
             </div>
             <button>PROCEED TO CHECKOUT</button>
